@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSphere", "SoccerSphere\SoccerSphere.csproj", "{A037AB1C-A48D-448A-ACE6-11C1335CEDAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A037AB1C-A48D-448A-ACE6-11C1335CEDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A037AB1C-A48D-448A-ACE6-11C1335CEDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A037AB1C-A48D-448A-ACE6-11C1335CEDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A037AB1C-A48D-448A-ACE6-11C1335CEDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {062D6403-69BC-4468-9BD6-CF1E1DC29526}
+	EndGlobalSection
+EndGlobal
