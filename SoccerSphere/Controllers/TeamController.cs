@@ -5,7 +5,6 @@ namespace SoccerSphere.Controllers
 {
     public class TeamController : Controller
     {
-        private 
         public IActionResult Index()
         {
 
