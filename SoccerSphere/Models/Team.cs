@@ -16,7 +16,7 @@ namespace SoccerSphere.Models
 
         public int Wins { get; set; }
 
-        public int Loss { get; set; }
+        public int Loses { get; set; }
 
         public int Draws { get; set; }
     }
