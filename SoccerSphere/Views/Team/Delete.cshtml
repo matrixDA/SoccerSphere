@@ -1,0 +1,15 @@
+﻿@model Player
+@{
+    ViewBag.Title = "Delete Player";
+}
+
+<h2 class="text-danger">Delete Team</h2>
+
+<p class="lead">
+    Are you sure you want to delete the player: <strong>@Model.PlayerName</strong>?
+</p>
+<form asp-controller="Team" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="PlayerId" />
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a asp-controller="Tean" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

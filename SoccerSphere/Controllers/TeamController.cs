@@ -38,5 +38,22 @@ namespace SoccerSphere.Controllers
 
             return View(player);
         }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var player = _ctx.players.Find(id);
+            return View(player);
+        }
+        [HttpPost]
+        public IActionResult Delete(Player player)
+        {
+            if (player != null)
+            {
+                _ctx.players.Remove(player);
+                _ctx.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
+

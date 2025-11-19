@@ -33,8 +33,7 @@
                 <td>@player.MatchesPlayed</td>
                 <td>@player.Rating.ToString("F2")</td>
                 <td>
-                    <a href="#" class="btn btn-sm btn-danger">Edit</a>
-                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-controller="Team" asp-action="Delete" asp-route-id="@player.PlayerId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }
