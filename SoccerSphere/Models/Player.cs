@@ -19,6 +19,6 @@ namespace SoccerSphere.Models
         [Required(ErrorMessage = "Please select a team.")]
         public int TeamId { get; set; }
 
-        public Team Team { get; set; }
+        public Team? Team { get; set; }
     }
 }

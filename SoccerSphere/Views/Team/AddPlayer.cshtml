@@ -5,7 +5,7 @@
 
 <h2>Add New Player</h2>
 
-<form asp-controller="Home" asp-action="AddPlayer" method="post">
+<form asp-controller="Team" asp-action="AddPlayer" method="post">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -50,6 +50,6 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Add Player</button>
-    <a asp-controller="Home" asp-action="TeamList" class="btn btn-outline-secondary mt-3">Cancel</a>
+    <button type="submit" class="btn btn-primary">Add Player</button>
+    <a asp-controller="Team" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

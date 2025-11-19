@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SoccerSphere.Models;
 
@@ -20,7 +21,7 @@ namespace SoccerSphere.Controllers
         public IActionResult AddPlayer()
         {
             var teams = _ctx.teams.OrderBy(t => t.TeamName).ToList();
-            ViewBag.Teams = teams;
+            ViewBag.Teams = new SelectList(teams, "TeamId", "TeamName");
             return View(new Player());
         }
         [HttpPost]
@@ -32,6 +33,9 @@ namespace SoccerSphere.Controllers
                 _ctx.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var teams = _ctx.teams.OrderBy(t => t.TeamName).ToList();
+            ViewBag.Teams = new SelectList(teams, "TeamId", "TeamName");
+
             return View(player);
         }
     }
