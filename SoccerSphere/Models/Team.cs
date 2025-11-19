@@ -11,9 +11,6 @@ namespace SoccerSphere.Models
 
         public decimal Revenue { get; set; }
 
-        [Required(ErrorMessage = "Country is required.")]
-        public string Country { get; set; }
-
         public int Wins { get; set; }
 
         public int Loss { get; set; }

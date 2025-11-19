@@ -7,7 +7,8 @@ namespace SoccerSphere.Models
         public int PlayerId { get; set; }
         [Required(ErrorMessage = "Please enter player's name.")]
         public string PlayerName { get; set; }
-
+        [Required(ErrorMessage = "Country is required.")]
+        public string Country { get; set; }
         public int Goals { get; set; }
 
         public int Assists { get; set; }
