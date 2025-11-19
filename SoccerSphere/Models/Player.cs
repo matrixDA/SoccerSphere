@@ -16,5 +16,9 @@ namespace SoccerSphere.Models
         public int MatchesPlayed { get; set; }
 
         public double Rating { get; set; }
+
+        public int TeamId { get; set; }
+
+        public Team Team { get; set; }
     }
 }
