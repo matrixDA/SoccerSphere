@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Team>
+@{
+    ViewData["Title"] = "Team";
+}
+
+<h2 class="p-2">All Teams</h2>
+<a asp-controller="Home" asp-action="Add" class="btn btn-primary mb-3">Add New Team</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Team Name</th>
+            <th>Revenue</th>
+            <th>Country</th>
+            <th>Wins</th>
+            <th>Loses</th>
+            <th>Draws</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model)
+        {
+            <tr>
+                <td>@team.TeamName</td>
+                <td>@team.Revenue.ToString("C0")</td>
+                <td>@team.Country</td>
+                <td>@team.Wins</td>
+                <td>@team.Loses</td>
+                <td>@team.Draws</td>
+                <td>
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@team.TeamId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -6,11 +6,11 @@ namespace SoccerSphere.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private TeamContext _ctx;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(TeamContext ctx)
         {
-            _logger = logger;
+            _ctx = ctx;
         }
 
         public IActionResult Index()
@@ -18,10 +18,43 @@ namespace SoccerSphere.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult TeamList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var teams = _ctx.teams.ToList();
+
+            return View(teams);
+        }
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View(new Team());
+        }
+        [HttpPost]
+        public IActionResult Add(Team team)
+        {
+            if (ModelState.IsValid)
+            {
+                _ctx.teams.Add(team);
+                _ctx.SaveChanges();
+                return RedirectToAction("TeamList");
+            }
+            return View(team);
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var team = _ctx.teams.Find(id);
+            return View(team);
+        }
+        [HttpPost]
+        public IActionResult Delete(Team team) 
+        {
+            if (team != null)
+            {
+                _ctx.teams.Remove(team);
+                _ctx.SaveChanges();
+            }
+            return RedirectToAction("TeamList");
         }
     }
 }

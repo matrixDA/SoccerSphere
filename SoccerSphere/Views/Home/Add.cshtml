@@ -1,0 +1,38 @@
+﻿@model Team
+@{
+    ViewBag.Title = "Add Team";
+}
+
+<h2>New Team</h2>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="TeamName">Team Name:</label>
+        <input type="text" asp-for="TeamName" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Revenue">Revenue:</label>
+        <input type="text" asp-for="Revenue" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Country">Country:</label>
+        <input type="text" asp-for="Country" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Wins">Wins:</label>
+        <input type="text" asp-for="Wins" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Loses">Loses:</label>
+        <input type="text" asp-for="Loses" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Draws">Draws:</label>
+        <input type="text" asp-for="Draws" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="TeamList" class="btn btn-outline-secondary">Cancel</a>
+</form>
