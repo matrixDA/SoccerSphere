@@ -1,20 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SoccerSphere.Data;
 using SoccerSphere.Models;
 
 namespace SoccerSphere.Controllers
 {
     public class TeamController : Controller
     {
-        private TeamContext ctx;
-        public TeamController(TeamContext teamContext)
+        private TeamContext _context;
+        public TeamController(TeamContext context)
         {
-            ctx = teamContext;
+            _context = context;
         }
         public IActionResult Index()
         {
-            var teams = ctx.teams.ToList();
-
-            return View(teams);
+            return RedirectToAction("Players");
         }
+
+        public IActionResult Players()
+        {
+            var players = _context.players.Include(p => p.Team).
+             Where(p => p.Team.TeamId == p.TeamId).OrderByDescending(p => p.Goals).ToList();
+
+            var model = new PlayerTeamViewModel
+            {
+                Players = players
+            };
+
+            return View(model);
+        }
+
+
     }
 }
