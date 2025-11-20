@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SoccerSphere.Models;
+using SoccerSphere.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

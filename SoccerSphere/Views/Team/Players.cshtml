@@ -1,0 +1,32 @@
+﻿@model PlayerTeamViewModel
+@{
+    ViewData["Title"] = "Players";
+}
+
+<h2>All Players</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>Goals</th>
+            <th>Assists</th>
+            <th>Team</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Player player in Model.Players)
+        {
+            <tr>
+                <td>@player.PlayerName</td>
+                <td>@player.Goals</td>
+                <td>@player.Assists</td>
+                <td>@player.Team.TeamName</td>
+                <td>
+                    <a asp-action="View" asp-route-id="@player.PlayerId" class="btn btn-primary">View</a>
+                    <a asp-action="Delete" asp-route-id="@player.PlayerId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
