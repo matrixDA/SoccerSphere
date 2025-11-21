@@ -24,7 +24,7 @@ namespace SoccerSphere.Controllers
 
         public IActionResult Teams()
         {
-            var teams = _context.teams.OrderBy(t => t.Wins).ToList();
+            var teams = _context.teams.OrderByDescending(t => t.Wins).ToList();
 
             var model = new PlayerTeamViewModel
             {
