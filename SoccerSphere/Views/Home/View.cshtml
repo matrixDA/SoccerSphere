@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PlayerTeamViewModel
+
 @{
+    ViewData["Title"] = Model.CurrentTeam.TeamName;
 }
+
+<div class="container mt-4">
+    <div class="card shadow-lg w-100" style="font-size: 1.5rem;">
+        <div class="card-header bg-primary text-white fs-2 py-3">
+            Team: @Model.CurrentTeam.TeamName
+        </div>
+        <div class="card-body p-5">
+            <h3 class="card-title">Country: @Model.CurrentTeam.Country</h3>
+            <p class="card-text">
+                <strong>Revenue:</strong> $@Model.CurrentTeam.Revenue.ToString("F2")<br>
+                <strong>Wins:</strong> @Model.CurrentTeam.Wins <br>
+                <strong>Draws:</strong> @Model.CurrentTeam.Draws <br>
+                <strong>Losses:</strong> @Model.CurrentTeam.Loses
+            </p>
+
+            <div class="d-flex gap-3 mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.CurrentTeam.TeamId" class="btn btn-warning btn-lg">
+                    Edit
+                </a>
+                <a asp-action="Delete" asp-route-id="@Model.CurrentTeam.TeamId" class="btn btn-danger btn-lg">
+                    Delete
+                </a>
+                <a asp-controller="Team" asp-action="Players" asp-route-id="@Model.CurrentTeam.TeamId" class="btn btn-info btn-lg">
+                    View Players
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,21 +1,40 @@
 ﻿@model PlayerTeamViewModel
 @{
-    ViewData["Title"] = "Players";
+    ViewData["Title"] = Model.CurrentTeam != null ? $"Players - {Model.CurrentTeam.TeamName}" : "All Players";
 }
 
-<h2>All Players</h2>
+<h2>
+    @(Model.CurrentTeam != null
+        ? $"Players - {Model.CurrentTeam.TeamName}"
+        : "All Players")
+</h2>
 
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Player Name</th>
-            <th>Goals</th>
-            <th>Assists</th>
-            <th>Team</th>
+            <th>
+                <a asp-action="Players" asp-route-id="@Model.CurrentTeam?.TeamId" asp-route-sortOrder="@ViewData["NameSortParam"]">Player Name</a>
+            </th>
+            <th>
+                <a asp-action="Players" asp-route-id="@Model.CurrentTeam?.TeamId" asp-route-sortOrder="@ViewData["GoalsSortParam"]">Goals</a>
+            </th>
+            <th>
+                <a asp-action="Players" asp-route-id="@Model.CurrentTeam?.TeamId" asp-route-sortOrder="@ViewData["AssistsSortParam"]">Assists</a>
+            </th>
+            @if (Model.CurrentTeam == null)
+            {
+                <th>
+                    <a asp-action="Players" asp-route-sortOrder="@ViewData["TeamSortParam"]">Team</a>
+                </th>
+            }
+            else
+            {
+                <th>Team</th>
+            }
         </tr>
     </thead>
     <tbody>
-        @foreach (Player player in Model.Players)
+        @foreach (var player in Model.Players)
         {
             <tr>
                 <td>@player.PlayerName</td>
@@ -23,8 +42,8 @@
                 <td>@player.Assists</td>
                 <td>@player.Team.TeamName</td>
                 <td>
-                    <a asp-action="View" asp-route-id="@player.PlayerId" class="btn btn-primary">View</a>
-                    <a asp-action="Delete" asp-route-id="@player.PlayerId" class="btn btn-danger">Delete</a>
+                    <a asp-action="View" asp-route-id="@player.PlayerId" class="btn btn-primary btn-sm">View</a>
+                    <a asp-action="Delete" asp-route-id="@player.PlayerId" class="btn btn-danger btn-sm">Delete</a>
                 </td>
             </tr>
         }

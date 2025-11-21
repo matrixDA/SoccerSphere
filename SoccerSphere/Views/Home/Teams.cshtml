@@ -8,26 +8,34 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>Team Name</th>
-            <th>Wins</th>
-            <th>Draws</th>
-            <th>Losses</th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["NameSortParam"]">Team Name</a>
+            </th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["WinsSortParam"]">Wins</a>
+            </th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["DrawsSortParam"]">Draws</a>
+            </th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["LossesSortParam"]">Losses</a>
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (Team team in Model.Teams)
+        @foreach (var team in Model.Teams)
         {
             <tr>
                 <td>@team.TeamName</td>
                 <td>@team.Wins</td>
                 <td>@team.Draws</td>
                 <td>@team.Loses</td>
-
                 <td>
-                    <a asp-action="View" asp-route-id="@team.TeamId" class="btn btn-primary">View</a>
-                    <a asp-action="Delete" asp-route-id="@team.TeamId" class="btn btn-danger">Delete</a>
+                    <a asp-action="View" asp-route-id="@team.TeamId" class="btn btn-primary btn-sm">View</a>
+                    <a asp-action="Delete" asp-route-id="@team.TeamId" class="btn btn-danger btn-sm">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
