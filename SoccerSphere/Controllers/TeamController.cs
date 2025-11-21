@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SoccerSphere.Data;
 using SoccerSphere.Models;
@@ -17,7 +18,7 @@ namespace SoccerSphere.Controllers
             return RedirectToAction("Players");
         }
 
-        [Route("[controller]/{id?}")]
+        [Route("[controller]/Players/{id?}")]
         public IActionResult Players(int? id = null, string sortOrder = "")
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -45,7 +46,30 @@ namespace SoccerSphere.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+            ViewBag.Teams = new SelectList(teams, "TeamId", "TeamName");
+            return View(new PlayerTeamViewModel
+            {
+                CurrentPlayer = new Player()
+            });
+        }
+        [HttpPost]
+        public IActionResult Add(PlayerTeamViewModel player)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.players.Add(player.CurrentPlayer);
+                _context.SaveChanges();
+                return RedirectToAction("Players");
+            }
+            var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+            ViewBag.Teams = new SelectList(teams, "TeamId", "TeamName");
 
+            return View(player);
+        }
         [HttpGet]
         public IActionResult View(int id)
         {
@@ -60,7 +84,7 @@ namespace SoccerSphere.Controllers
             return View(model);
 
         }
-
+        
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -77,12 +101,12 @@ namespace SoccerSphere.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Player player)
+        public IActionResult Delete(PlayerTeamViewModel player)
         {
-            _context.players.Remove(player);
+            _context.players.Remove(player.CurrentPlayer);
             _context.SaveChanges();
 
-            return View("Players");
+            return RedirectToAction("Players");
         }
 
         private IQueryable<Player> ApplyPlayerSorting(IQueryable<Player> players, string sortOrder)

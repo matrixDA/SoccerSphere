@@ -57,7 +57,22 @@ namespace SoccerSphere.Controllers
             return View(model);
 
         }
-
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View(new Team());
+        }
+        [HttpPost]
+        public IActionResult Add(Team team)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.teams.Add(team);
+                _context.SaveChanges();
+                return RedirectToAction("Teams");
+            }
+            return View(team);
+        }
         [HttpGet]
         public IActionResult Delete(int id)
         {

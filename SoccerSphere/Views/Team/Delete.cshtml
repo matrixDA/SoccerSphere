@@ -15,7 +15,7 @@
             </p>
 
             <form asp-action="Delete" method="post" class="mt-4">
-                <input type="hidden" asp-for="@Model.CurrentPlayer.PlayerId" />
+                <input type="hidden" asp-for="CurrentPlayer.PlayerId" />
 
                 <div class="d-flex justify-content-start gap-3">
                     <button type="submit" class="btn btn-danger btn-lg">Delete</button>

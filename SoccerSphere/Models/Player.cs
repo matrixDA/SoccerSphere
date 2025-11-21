@@ -16,9 +16,9 @@ namespace SoccerSphere.Models
         public int MatchesPlayed { get; set; }
 
         public double Rating { get; set; }
-
+        [Required(ErrorMessage = "Please select a team.")]
         public int TeamId { get; set; }
 
-        public Team Team { get; set; }
+        public Team? Team { get; set; }
     }
 }

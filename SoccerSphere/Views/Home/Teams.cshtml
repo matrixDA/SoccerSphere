@@ -4,7 +4,7 @@
 }
 
 <h2>All Teams</h2>
-
+<a asp-action="Add" class="btn btn-primary btn-sm">Add</a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -19,6 +19,9 @@
             </th>
             <th>
                 <a asp-action="Teams" asp-route-sortOrder="@ViewData["LossesSortParam"]">Losses</a>
+            </th>
+            <th>
+                Actions
             </th>
         </tr>
     </thead>
