@@ -35,6 +35,34 @@ namespace SoccerSphere.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult View(int id)
+        {
+            var team = _context.teams.Find(id);
+
+            var model = new PlayerTeamViewModel
+            {
+                CurrentTeam = team
+            };
+
+            return View(model);
+
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var team = _context.teams.Find(id);
+
+            var model = new PlayerTeamViewModel
+            {
+                CurrentTeam = team
+            };
+
+            return View(model);
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
