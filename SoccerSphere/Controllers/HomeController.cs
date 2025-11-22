@@ -21,7 +21,10 @@ namespace SoccerSphere.Controllers
         {
             return View();
         }
-
+        public IActionResult About()
+        {
+            return View();
+        }
         public IActionResult Teams(string sortOrder)
         {
             ViewData["CurrentSort"] = sortOrder;
