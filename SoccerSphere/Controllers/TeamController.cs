@@ -50,26 +50,40 @@ namespace SoccerSphere.Controllers
         public IActionResult Add()
         {
             var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
-            ViewBag.Teams = new SelectList(teams, "TeamId", "TeamName");
-            return View(new PlayerTeamViewModel
+
+            var model = new PlayerTeamViewModel
             {
-                CurrentPlayer = new Player()
-            });
+                CurrentPlayer = new Player(),
+                Teams = teams
+            };
+
+            return View(model);
         }
+
         [HttpPost]
-        public IActionResult Add(PlayerTeamViewModel player)
+        public IActionResult Add(PlayerTeamViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.players.Add(player.CurrentPlayer);
+                if (model.CurrentPlayer.PlayerId == 0)
+                {
+                    _context.players.Add(model.CurrentPlayer);
+                }
+                else
+                {
+                    _context.players.Update(model.CurrentPlayer);
+                }
+
                 _context.SaveChanges();
                 return RedirectToAction("Players");
             }
-            var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
-            ViewBag.Teams = new SelectList(teams, "TeamId", "TeamName");
-
-            return View(player);
+            else
+            {
+                model.Teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+                return View(model);
+            }
         }
+
         [HttpGet]
         public IActionResult View(int id)
         {
@@ -83,6 +97,21 @@ namespace SoccerSphere.Controllers
 
             return View(model);
 
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var player = _context.players.Find(id);
+            var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+
+            var model = new PlayerTeamViewModel
+            {
+                CurrentPlayer = player,
+                Teams = teams
+            };
+
+            return View("Add", model);
         }
         
         [HttpGet]

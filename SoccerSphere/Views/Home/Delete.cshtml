@@ -15,11 +15,11 @@
             </p>
 
             <form asp-action="Delete" method="post" class="mt-4">
-                <input type="hidden" asp-for="@Model.CurrentTeam.TeamId" />
+                <input type="hidden" asp-for="CurrentTeam.TeamId" />
 
                 <div class="d-flex justify-content-start gap-3">
                     <button type="submit" class="btn btn-danger btn-lg">Delete</button>
-                    <a asp-controller="Home" asp-action="Teams" class="btn btn-secondary btn-lg">Cancel</a>
+                    <a asp-action="Teams" class="btn btn-secondary btn-lg">Cancel</a>
                 </div>
             </form>
         </div>

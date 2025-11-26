@@ -60,22 +60,57 @@ namespace SoccerSphere.Controllers
             return View(model);
 
         }
+
         [HttpGet]
         public IActionResult Add()
         {
-            return View(new Team());
+
+            var model = new PlayerTeamViewModel
+            {
+                CurrentTeam = new Team()
+            };
+
+            return View(model);
         }
+
         [HttpPost]
-        public IActionResult Add(Team team)
+        public IActionResult Add(PlayerTeamViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.teams.Add(team);
+                if (model.CurrentTeam.TeamId == 0)
+                {
+                    _context.teams.Add(model.CurrentTeam);
+                }
+                else
+                {
+                    _context.teams.Update(model.CurrentTeam);
+                }
+
                 _context.SaveChanges();
                 return RedirectToAction("Teams");
             }
-            return View(team);
+            else
+            {
+                return View(model);
+            }
+
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var team = _context.teams.Find(id);
+
+            var model = new PlayerTeamViewModel
+            {
+                CurrentTeam = team
+            };
+
+            return View("Add", model);
+
+        }
+
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -90,12 +125,12 @@ namespace SoccerSphere.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Team team)
+        public IActionResult Delete(PlayerTeamViewModel model)
         {
-            _context.teams.Remove(team);
+            _context.teams.Remove(model.CurrentTeam);
             _context.SaveChanges();
 
-            return View("Teams");
+            return RedirectToAction("Teams");
         }
 
 

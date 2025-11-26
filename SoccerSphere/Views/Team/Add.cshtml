@@ -1,61 +1,62 @@
 ﻿@model PlayerTeamViewModel
 @{
-    ViewBag.Title = "Add New Player";
+    string title = Model.CurrentPlayer != null && Model.CurrentPlayer.PlayerId != 0 ? $"Edit {Model.CurrentPlayer.PlayerName}" : "Add Player";
+    ViewData["Title"] = title;
 }
 
-<h2>Add New Player</h2>
+<h2>@ViewData["Title"]</h2>
 
 <form asp-controller="Team" asp-action="Add" method="post">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
-        <label asp-for="@Model.CurrentPlayer.PlayerName" class="form-label"></label>
-        <input asp-for="@Model.CurrentPlayer.PlayerName" class="form-control" />
-        <span asp-validation-for="@Model.CurrentPlayer.PlayerName" class="text-danger"></span>
+        <label asp-for="CurrentPlayer.PlayerName" class="form-label"></label>
+        <input asp-for="CurrentPlayer.PlayerName" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.CurrentPlayer.Country" class="form-label"></label>
-        <input asp-for="@Model.CurrentPlayer.Country" class="form-control" />
-        <span asp-validation-for="@Model.CurrentPlayer.Country" class="text-danger"></span>
+        <label asp-for="CurrentPlayer.Country" class="form-label"></label>
+        <input asp-for="CurrentPlayer.Country" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.CurrentPlayer.TeamId" class="form-label">Team</label>
-        <select asp-for="@Model.CurrentPlayer.TeamId" asp-items="@ViewBag.Teams" class="form-control">
+        <label asp-for="CurrentPlayer.TeamId" class="form-label">Team</label>
+        <select asp-for="CurrentPlayer.TeamId" class="form-control"
+                        asp-items="@(new SelectList(Model.Teams, "TeamId", "TeamName", Model?.CurrentPlayer?.TeamId))">
             <option value="">-- Select a Team --</option>
         </select>
-        <span asp-validation-for="@Model.CurrentPlayer.TeamId" class="text-danger"></span>
     </div>
 
     <div class="row">
         <div class="col-4">
             <div class="form-group">
-                <label asp-for="@Model.CurrentPlayer.Goals" class="form-label"></label>
-                <input asp-for="@Model.CurrentPlayer.Goals" type="number" class="form-control" />
+                <label asp-for="CurrentPlayer.Goals" class="form-label"></label>
+                <input asp-for="CurrentPlayer.Goals" type="number" class="form-control" />
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
-                <label asp-for="@Model.CurrentPlayer.Assists" class="form-label"></label>
-                <input asp-for="@Model.CurrentPlayer.Assists" type="number" class="form-control" />
+                <label asp-for="CurrentPlayer.Assists" class="form-label"></label>
+                <input asp-for="CurrentPlayer.Assists" type="number" class="form-control" />
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
-                <label asp-for="@Model.CurrentPlayer.MatchesPlayed" class="form-label"></label>
-                <input asp-for="@Model.CurrentPlayer.MatchesPlayed" type="number" class="form-control" />
+                <label asp-for="CurrentPlayer.MatchesPlayed" class="form-label"></label>
+                <input asp-for="CurrentPlayer.MatchesPlayed" type="number" class="form-control" />
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
-                <label asp-for="@Model.CurrentPlayer.Rating" class="form-label"></label>
-                <input asp-for="@Model.CurrentPlayer.Rating" type="number" class="form-control" />
+                <label asp-for="CurrentPlayer.Rating" class="form-label"></label>
+                <input asp-for="CurrentPlayer.Rating" type="number" step="0.1" class="form-control" />
             </div>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Add Player</button>
-    <a asp-controller="Team" asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <input type="hidden" asp-for="CurrentPlayer.PlayerId" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-controller="Team" asp-action="Players" class="btn btn-secondary">Cancel</a>
 </form>
