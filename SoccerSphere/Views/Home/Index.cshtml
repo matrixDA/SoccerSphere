@@ -2,7 +2,34 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4 text-center p-5">
+    <h1 class="display-4 mb-4">Welcome to SoccerSphere</h1>
+    <p class="lead mb-5">Explore your favorite players and teams.</p>
+
+    <div class="d-flex justify-content-center flex-wrap gap-4">
+        <div class="p-4 rounded shadow-lg text-white"
+             style="background: #007bff; min-width: 250px;">
+            <h3>Players</h3>
+            <p>View stats, positions, and performance of all players.</p>
+            <a asp-controller="Team" asp-action="Players" class="btn btn-light cust-hover" id="cust-hover">Go to Players</a>
+        </div>
+
+        <div class="p-4 rounded shadow-lg text-white"
+             style="background: #28a745; min-width: 250px;">
+            <h3>Teams</h3>
+            <p>Browse all teams, their records, and achievements.</p>
+            <a asp-controller="Home" asp-action="Teams" class="btn btn-light" id="cust-hover">Go to Teams</a>
+        </div>
+
+        <div class="p-4 rounded shadow-lg text-white"
+             style="background: #17a2b8; min-width: 250px;">
+            <h3>About Us</h3>
+            <p>Learn more about SoccerSphere and our team.</p>
+            <a asp-controller="Home" asp-action="About" class="btn btn-light" id="cust-hover">About Us</a>
+        </div>
+    </div>
 </div>
+
+
+
+

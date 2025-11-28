@@ -30,8 +30,11 @@ namespace SoccerSphere.Models
         public double? Rating { get; set; }
 
         [Required(ErrorMessage = "Team is Required.")]
-        public int TeamId { get; set; }
-
+        public int? TeamId { get; set; }
         public Team? Team { get; set; }
+
+        [Required(ErrorMessage = "Position is Required.")]
+        public int? PositionId { get; set; }
+        public Position? Position { get; set; }
     }
 }

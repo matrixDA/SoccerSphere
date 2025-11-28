@@ -18,43 +18,53 @@ namespace SoccerSphere.Controllers
             return RedirectToAction("Players");
         }
 
-        [Route("[controller]/Players/{id?}")]
-        public IActionResult Players(int? id = null, string sortOrder = "")
+
+        public IActionResult Players(string sortType, string sortDir, string posId, int? id = null)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
-            ViewData["GoalsSortParam"] = sortOrder == "goals_asc" ? "goals_desc" : "goals_asc";
-            ViewData["AssistsSortParam"] = sortOrder == "assists_asc" ? "assists_desc" : "assists_asc";
-            ViewData["TeamSortParam"] = sortOrder == "team_asc" ? "team_desc" : "team_asc";
+            var players = _context.players.Include(p => p.Team).Include(p => p.Position).AsQueryable();
+            var positions = _context.positions.ToList();
 
-            var players = _context.players.Include(p => p.Team).AsQueryable();
 
+            // Filter by Team
             if (id.HasValue && id > 0)
             {
                 players = players.Where(p => p.TeamId == id);
             }
 
-            players = ApplyPlayerSorting(players, sortOrder);
+            // Filter by Player Position
+            if (!string.IsNullOrEmpty(posId) && int.TryParse(posId, out int posIdInt))
+            {
+                players = players.Where(p => p.PositionId == posIdInt);
+            }
+
+            players = ApplyPlayerSorting(players, sortType, sortDir);
+
+            ViewData["CurrentSortType"] = sortType;
+            ViewData["CurrentSortDir"] = sortDir;
+            ViewData["CurrentPosId"] = posId;
 
             var model = new PlayerTeamViewModel
             {
                 Players = players.ToList(),
                 CurrentTeam = id.HasValue && id > 0
-                    ? _context.teams.FirstOrDefault(t => t.TeamId == id)
-                    : null
+                    ? _context.teams.FirstOrDefault(t => t.TeamId == id) : null,
+                Positions = positions
             };
 
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Add()
         {
             var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+            var positions = _context.positions.ToList();
 
             var model = new PlayerTeamViewModel
             {
                 CurrentPlayer = new Player(),
-                Teams = teams
+                Teams = teams,
+                Positions = positions
             };
 
             return View(model);
@@ -80,6 +90,7 @@ namespace SoccerSphere.Controllers
             else
             {
                 model.Teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+                model.Positions = _context.positions.ToList();
                 return View(model);
             }
         }
@@ -89,6 +100,7 @@ namespace SoccerSphere.Controllers
         {
             var player = _context.players.Find(id);
             player.Team = _context.teams.Find(player.TeamId);
+            player.Position = _context.positions.Find(player.PositionId);
 
             var model = new PlayerTeamViewModel
             {
@@ -104,11 +116,13 @@ namespace SoccerSphere.Controllers
         {
             var player = _context.players.Find(id);
             var teams = _context.teams.OrderBy(t => t.TeamName).ToList();
+            var positions = _context.positions.ToList();
 
             var model = new PlayerTeamViewModel
             {
                 CurrentPlayer = player,
-                Teams = teams
+                Teams = teams,
+                Positions = positions
             };
 
             return View("Add", model);
@@ -138,29 +152,18 @@ namespace SoccerSphere.Controllers
             return RedirectToAction("Players");
         }
 
-        private IQueryable<Player> ApplyPlayerSorting(IQueryable<Player> players, string sortOrder)
+        private IQueryable<Player> ApplyPlayerSorting(IQueryable<Player> players, string sortType, string sortDir)
         {
-            switch (sortOrder)
+            bool ascending = sortDir == "asc";
+
+            return sortType switch
             {
-                case "name_asc":
-                    return players.OrderBy(p => p.PlayerName);
-                case "name_desc":
-                    return players.OrderByDescending(p => p.PlayerName);
-                case "goals_asc":
-                    return players.OrderBy(p => p.Goals);
-                case "goals_desc":
-                    return players.OrderByDescending(p => p.Goals);
-                case "assists_asc":
-                    return players.OrderBy(p => p.Assists);
-                case "assists_desc":
-                    return players.OrderByDescending(p => p.Assists);
-                case "team_asc":
-                    return players.OrderBy(p => p.Team.TeamName);
-                case "team_desc":
-                    return players.OrderByDescending(p => p.Team.TeamName);
-                default:
-                    return players.OrderByDescending(p => p.Goals); 
-            }
+                "name" => ascending ? players.OrderBy(p => p.PlayerName) : players.OrderByDescending(p => p.PlayerName),
+                "goals" => ascending ? players.OrderBy(p => p.Goals) : players.OrderByDescending(p => p.Goals),
+                "assists" => ascending ? players.OrderBy(p => p.Assists) : players.OrderByDescending(p => p.Assists),
+                "team" => ascending ? players.OrderBy(p => p.Team.TeamName) : players.OrderByDescending(p => p.Team.TeamName),
+                _ => players.OrderByDescending(p => p.Goals)
+            };
         }
 
 

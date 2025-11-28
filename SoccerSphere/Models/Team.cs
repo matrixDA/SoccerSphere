@@ -28,5 +28,7 @@ namespace SoccerSphere.Models
         [Required(ErrorMessage = "Draws is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Draws must be at least zero.")]
         public int? Draws { get; set; }
+
+
     }
 }

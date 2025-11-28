@@ -3,47 +3,85 @@
     ViewData["Title"] = Model.CurrentTeam != null ? $"Players - {Model.CurrentTeam.TeamName}" : "All Players";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4 p-5">
+    <h2>@ViewData["Title"]</h2>
 
-<a asp-controller="Team" asp-action="Add" class="btn btn-primary mb-3">Add New Player</a>
+    <a asp-controller="Team" asp-action="Add" class="btn btn-primary mb-3">Add New Player</a>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Players" asp-route-id="@Model.CurrentTeam?.TeamId" asp-route-sortOrder="@ViewData["NameSortParam"]">Player Name</a>
-            </th>
-            <th>
-                <a asp-action="Players" asp-route-id="@Model.CurrentTeam?.TeamId" asp-route-sortOrder="@ViewData["GoalsSortParam"]">Goals</a>
-            </th>
-            <th>
-                <a asp-action="Players" asp-route-id="@Model.CurrentTeam?.TeamId" asp-route-sortOrder="@ViewData["AssistsSortParam"]">Assists</a>
-            </th>
-            @if (Model.CurrentTeam == null)
-            {
-                <th>
-                    <a asp-action="Players" asp-route-sortOrder="@ViewData["TeamSortParam"]">Team</a>
-                </th>
-            }
-            else
-            {
-                <th>Team</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var player in Model.Players)
-        {
+    <form asp-action="Players" method="get" class="mb-3 d-flex align-items-end">
+        <input type="hidden" name="id" value="@Model.CurrentTeam?.TeamId" />
+
+        <div class="mr-3 me-2">
+            <label for="sortType">Sort by:</label>
+            <select id="sortType" name="sortType" class="form-control">
+                <option value="">-- None --</option>
+                <option value="name" selected="@(ViewData["CurrentSortType"]?.ToString() == "name")">Player Name</option>
+                <option value="goals" selected="@(ViewData["CurrentSortType"]?.ToString() == "goals")">Goals</option>
+                <option value="assists" selected="@(ViewData["CurrentSortType"]?.ToString() == "assists")">Assists</option>
+                @if (Model.CurrentTeam == null)
+                {
+                    <option value="team" selected="@(ViewData["CurrentSortType"]?.ToString() == "team")">Team</option>
+                }
+            </select>
+        </div>
+
+        <div class="mr-3 me-2">
+            <label for="sortDir">Direction:</label>
+            <select id="sortDir" name="sortDir" class="form-control">
+                <option value="">-- None --</option>
+                <option value="asc" selected="@(ViewData["CurrentSortDir"]?.ToString() == "asc")">Ascending</option>
+                <option value="desc" selected="@(ViewData["CurrentSortDir"]?.ToString() == "desc")">Descending</option>
+            </select>
+        </div>
+
+        <div class="mr-3 me-1">
+            <label for="posId">Position:</label>
+            <select id="posId" name="posId" class="form-control">
+                <option value="">-- All Positions --</option>
+                @foreach (var position in Model.Positions)
+                {
+                    <option value="@position.PositionId" selected="@(ViewData["CurrentPosId"]?.ToString() == position.PositionId.ToString())">
+                        @position.PositionName
+                    </option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Apply</button>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@player.PlayerName</td>
-                <td>@player.Goals</td>
-                <td>@player.Assists</td>
-                <td>@player.Team.TeamName</td>
-                <td>
-                    <a asp-action="View" asp-route-id="@player.PlayerId" class="btn btn-primary btn-sm">View</a>
-                    <a asp-action="Delete" asp-route-id="@player.PlayerId" class="btn btn-danger btn-sm">Delete</a>
-                </td>
+                <th>
+                    Player Name
+                </th>
+                <th>
+                    Goals
+                </th>
+                <th>
+                    Assists
+                </th>
+                <th>
+                    Team
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var player in Model.Players)
+            {
+                <tr>
+                    <td>@player.PlayerName</td>
+                    <td>@player.Goals</td>
+                    <td>@player.Assists</td>
+                    <td>@player.Team.TeamName</td>
+                    <td>
+                        <a asp-action="View" asp-route-id="@player.PlayerId" class="btn btn-primary btn-sm">View</a>
+                        <a asp-action="Delete" asp-route-id="@player.PlayerId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

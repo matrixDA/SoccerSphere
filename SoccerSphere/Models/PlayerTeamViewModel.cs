@@ -6,5 +6,6 @@
         public List<Team>? Teams { get; set; }
         public Player? CurrentPlayer { get; set; }
         public Team? CurrentTeam { get; set; }
+        public List<Position>? Positions { get; set; }
     }
 }

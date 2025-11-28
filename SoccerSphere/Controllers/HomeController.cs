@@ -25,18 +25,14 @@ namespace SoccerSphere.Controllers
         {
             return View();
         }
-        public IActionResult Teams(string sortOrder)
+        public IActionResult Teams(string sortType, string sortDir)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
-            ViewData["WinsSortParam"] = sortOrder == "wins_asc" ? "wins_desc" : "wins_asc";
-            ViewData["DrawsSortParam"] = sortOrder == "draws_asc" ? "draws_desc" : "draws_asc";
-            ViewData["LossesSortParam"] = sortOrder == "losses_asc" ? "losses_desc" : "losses_asc";
-
-
             var teams = _context.teams.AsQueryable();
 
-            teams = ApplyTeamSorting(teams, sortOrder);
+            teams = ApplyTeamSorting(teams, sortType, sortDir);
+
+            ViewData["CurrentSortType"] = sortType;
+            ViewData["CurrentSortDir"] = sortDir;
 
             var model = new PlayerTeamViewModel
             {
@@ -141,29 +137,18 @@ namespace SoccerSphere.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private IQueryable<Team> ApplyTeamSorting(IQueryable<Team> teams, string sortOrder)
+        private IQueryable<Team> ApplyTeamSorting(IQueryable<Team> teams, string sortType, string sortDir)
         {
-            switch (sortOrder)
+            bool ascending = sortDir == "asc";
+
+            return sortType switch
             {
-                case "name_desc":
-                    return teams.OrderByDescending(t => t.TeamName);
-                case "name_asc":
-                    return teams.OrderBy(t => t.TeamName);
-                case "wins_desc":
-                    return teams.OrderByDescending(t => t.Wins);
-                case "wins_asc":
-                    return teams.OrderBy(t => t.Wins);
-                case "draws_desc":
-                    return teams.OrderByDescending(t => t.Draws);
-                case "draws_asc":
-                    return teams.OrderBy(t => t.Draws);
-                case "losses_desc":
-                    return teams.OrderByDescending(t => t.Loses);
-                case "losses_asc":
-                    return teams.OrderBy(t => t.Loses);
-                default:
-                    return teams.OrderByDescending(t => t.Wins); // default sort
-            }
+                "name" => ascending ? teams.OrderBy(t => t.TeamName) : teams.OrderByDescending(t => t.TeamName),
+                "wins" => ascending ? teams.OrderBy(t => t.Wins) : teams.OrderByDescending(t => t.Wins),
+                "draws" => ascending ? teams.OrderBy(t => t.Draws) : teams.OrderByDescending(t => t.Draws),
+                "losses" => ascending ? teams.OrderBy(t => t.Loses) : teams.OrderByDescending(t => t.Loses),
+                _ => teams.OrderByDescending(t => t.Wins)
+            };
         }
 
     }
