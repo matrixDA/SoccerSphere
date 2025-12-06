@@ -5,12 +5,13 @@ This project demonstrates key web development concepts including routing, contro
 
 ---
 
-## 📦 Built With
-
-- C#, Razor
-- HTML, CSS
-- Entity Framework (EF) Core
-- ASP.NET MVC
+## 📦 Technologies Used
+- ASP.NET Core MVC 8
+- Entity Framework Core
+- SQL Server (LocalDB)
+- Bootstrap for styling
+- Dependency Injection (IServiceCollection)
+- Git & GitHub for team collaboration
 
 ---
 
