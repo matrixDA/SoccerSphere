@@ -3,6 +3,7 @@
 ⚽ **SoccerSphere** is a full-stack ASP.NET MVC application designed to bring together information about soccer teams, players, match schedules, and statistics.  
 This project demonstrates key web development concepts including routing, controllers, views, database integration, model relationships, and dependency injection.
 
+- Team members: Dinesh Adhikari, Loc Nguyen, Venkat Yuva Raaj Narra  
 ---
 
 ## 📦 Technologies Used
