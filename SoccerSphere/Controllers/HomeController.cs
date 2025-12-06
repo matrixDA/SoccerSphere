@@ -25,14 +25,18 @@ namespace SoccerSphere.Controllers
         {
             return View();
         }
-        public IActionResult Teams(string sortType, string sortDir)
+        public IActionResult Teams(string sortOrder)
         {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+            ViewData["WinsSortParam"] = sortOrder == "wins_asc" ? "wins_desc" : "wins_asc";
+            ViewData["DrawsSortParam"] = sortOrder == "draws_asc" ? "draws_desc" : "draws_asc";
+            ViewData["LossesSortParam"] = sortOrder == "losses_asc" ? "losses_desc" : "losses_asc";
+
+
             var teams = _context.teams.AsQueryable();
 
-            teams = ApplyTeamSorting(teams, sortType, sortDir);
-
-            ViewData["CurrentSortType"] = sortType;
-            ViewData["CurrentSortDir"] = sortDir;
+            teams = ApplyTeamSorting(teams, sortOrder);
 
             var model = new PlayerTeamViewModel
             {
@@ -56,57 +60,22 @@ namespace SoccerSphere.Controllers
             return View(model);
 
         }
-
         [HttpGet]
         public IActionResult Add()
         {
-
-            var model = new PlayerTeamViewModel
-            {
-                CurrentTeam = new Team()
-            };
-
-            return View(model);
+            return View(new Team());
         }
-
         [HttpPost]
-        public IActionResult Add(PlayerTeamViewModel model)
+        public IActionResult Add(Team team)
         {
             if (ModelState.IsValid)
             {
-                if (model.CurrentTeam.TeamId == 0)
-                {
-                    _context.teams.Add(model.CurrentTeam);
-                }
-                else
-                {
-                    _context.teams.Update(model.CurrentTeam);
-                }
-
+                _context.teams.Add(team);
                 _context.SaveChanges();
                 return RedirectToAction("Teams");
             }
-            else
-            {
-                return View(model);
-            }
-
+            return View(team);
         }
-
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var team = _context.teams.Find(id);
-
-            var model = new PlayerTeamViewModel
-            {
-                CurrentTeam = team
-            };
-
-            return View("Add", model);
-
-        }
-
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -121,12 +90,12 @@ namespace SoccerSphere.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(PlayerTeamViewModel model)
+        public IActionResult Delete(Team team)
         {
-            _context.teams.Remove(model.CurrentTeam);
+            _context.teams.Remove(team);
             _context.SaveChanges();
 
-            return RedirectToAction("Teams");
+            return View("Teams");
         }
 
 
@@ -137,18 +106,29 @@ namespace SoccerSphere.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private IQueryable<Team> ApplyTeamSorting(IQueryable<Team> teams, string sortType, string sortDir)
+        private IQueryable<Team> ApplyTeamSorting(IQueryable<Team> teams, string sortOrder)
         {
-            bool ascending = sortDir == "asc";
-
-            return sortType switch
+            switch (sortOrder)
             {
-                "name" => ascending ? teams.OrderBy(t => t.TeamName) : teams.OrderByDescending(t => t.TeamName),
-                "wins" => ascending ? teams.OrderBy(t => t.Wins) : teams.OrderByDescending(t => t.Wins),
-                "draws" => ascending ? teams.OrderBy(t => t.Draws) : teams.OrderByDescending(t => t.Draws),
-                "losses" => ascending ? teams.OrderBy(t => t.Loses) : teams.OrderByDescending(t => t.Loses),
-                _ => teams.OrderByDescending(t => t.Wins)
-            };
+                case "name_desc":
+                    return teams.OrderByDescending(t => t.TeamName);
+                case "name_asc":
+                    return teams.OrderBy(t => t.TeamName);
+                case "wins_desc":
+                    return teams.OrderByDescending(t => t.Wins);
+                case "wins_asc":
+                    return teams.OrderBy(t => t.Wins);
+                case "draws_desc":
+                    return teams.OrderByDescending(t => t.Draws);
+                case "draws_asc":
+                    return teams.OrderBy(t => t.Draws);
+                case "losses_desc":
+                    return teams.OrderByDescending(t => t.Loses);
+                case "losses_asc":
+                    return teams.OrderBy(t => t.Loses);
+                default:
+                    return teams.OrderByDescending(t => t.Wins); // default sort
+            }
         }
 
     }

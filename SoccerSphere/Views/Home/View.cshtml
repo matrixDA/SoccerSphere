@@ -1,17 +1,18 @@
 ﻿@model PlayerTeamViewModel
 
 @{
-    ViewData["Title"] = "View - " + Model.CurrentTeam.TeamName;
+    ViewData["Title"] = Model.CurrentTeam.TeamName;
 }
 
-<div class="card shadow-lg w-100 mt-4" style="font-size: 1.5rem;">
+<div class="container mt-4">
+    <div class="card shadow-lg w-100" style="font-size: 1.5rem;">
         <div class="card-header bg-primary text-white fs-2 py-3">
             Team: @Model.CurrentTeam.TeamName
         </div>
         <div class="card-body p-5">
             <h3 class="card-title">Country: @Model.CurrentTeam.Country</h3>
             <p class="card-text">
-                <strong>Revenue:</strong> $@Model.CurrentTeam.Revenue<br>
+                <strong>Revenue:</strong> $@Model.CurrentTeam.Revenue.ToString("F2")<br>
                 <strong>Wins:</strong> @Model.CurrentTeam.Wins <br>
                 <strong>Draws:</strong> @Model.CurrentTeam.Draws <br>
                 <strong>Losses:</strong> @Model.CurrentTeam.Loses
@@ -30,5 +31,6 @@
             </div>
         </div>
     </div>
+</div>
 
 

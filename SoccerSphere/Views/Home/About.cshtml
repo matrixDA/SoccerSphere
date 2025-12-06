@@ -1,46 +1,62 @@
 ﻿@{
-    ViewData["Title"] = "About Us";
+    ViewData["Title"] = "About";
 }
 
-<div class="container mt-4 p-5">
-    <h1>About SoccerSphere</h1>
+<!-- Header bar
 
-    <p style="font-size: 1.15rem; margin-top: 15px;">
-        SoccerSphere is a simple ASP.NET MVC website designed to showcase information
-        about soccer teams and players. The goal is to
-        provide a clean and easy-to-use platform that organizes soccer-related data while
-        demonstrating full-stack MVC development using controllers, views, models, and a
-        database.
+
+-->
+<div style="background-color:#007bff; color:white; padding:20px; border-radius:6px; margin-bottom:20px;">
+    <h2 class="m-0">About SoccerSphere</h2>
+</div>
+
+<!-- Content card -->
+<div style="
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    max-width:900px;
+">
+
+    <p style="font-size: 1.15rem; line-height:1.8;">
+        <strong>SoccerSphere</strong> is a full-stack ASP.NET MVC application designed to bring
+        together information about soccer teams, players, match schedules, and statistics.
+        This project was built to demonstrate key web development concepts including routing,
+        controllers, views, database integration, model relationships, and dependency injection.
     </p>
 
-    <p style="font-size: 1.15rem; margin-top: 15px;">
-        As soccer fans, we created an MVC app that blends our passion for soccer with our ASP.NET and C# skills, 
-        reflecting what we learned in Web Server Application Development.
+    <h4 class="mt-4 mb-2" style="font-weight:600;">Our Purpose</h4>
+    <p style="font-size:1.1rem; line-height:1.8;">
+        Our goal is to provide a clean, simple, and engaging platform for exploring soccer-related
+        data. Whether you want to browse teams, analyze statistics, or view player performance,
+        SoccerSphere organizes the information in a way that is intuitive and visually easy to follow.
     </p>
 
-    <div class="d-flex justify-content-center flex-wrap gap-4 mt-5">
-        <div class="card shadow-lg text-white" style="background: #007bff; min-width: 250px; max-width: 300px;">
-            <div class="card-body">
-                <h3 class="card-title">Dinesh Adhikari</h3>
-                <p class="card-text">
-                    Fourth-year Information Technology student with a focus on Software Application Development and Networking/Administration. 
-                    In my free time, I enjoy coding, playing video games, and working out.
-                </p>
-            </div>
-        </div>
+    <h4 class="mt-4 mb-2" style="font-weight:600;">What You Can Explore</h4>
+    <ul style="font-size:1.1rem; line-height:2;">
+        <li><strong>Teams</strong> – Wins, draws, losses, revenue, country, and more.</li>
+        <li><strong>Players</strong> – Goals, assists, match performance, ratings.</li>
+        <li><strong>Match Schedules</strong> – (Team feature depending on your project scope.)</li>
+        <li><strong>Stats</strong> – Combined player and team statistics.</li>
+    </ul>
 
-        <div class="card shadow-lg text-white" style="background: #28a745; min-width: 250px; max-width: 300px;">
-            <div class="card-body">
-                <h3 class="card-title">Loc Nguyen</h3>
-                <p class="card-text">I'm senior student at UC majoring in Software Development and Data Technologies. I love spending time with nature and enjoy playing video games'</p>
-            </div>
-        </div>
+    <h4 class="mt-4 mb-2" style="font-weight:600;">Technologies Used</h4>
+    <ul style="font-size:1.1rem; line-height:2;">
+        <li>ASP.NET Core MVC 8</li>
+        <li>Entity Framework Core</li>
+        <li>SQL Server (LocalDB)</li>
+        <li>Bootstrap for styling</li>
+        <li>Dependency Injection (IServiceCollection)</li>
+        <li>Git & GitHub for team collaboration</li>
+    </ul>
 
-        <div class="card shadow-lg text-white" style="background: #17a2b8; min-width: 250px; max-width: 300px;">
-            <div class="card-body">
-                <h3 class="card-title"></h3>
-                <p class="card-text"></p>
-            </div>
-        </div>
-    </div>
+    <h4 class="mt-4 mb-2" style="font-weight:600;">Teamwork & Development</h4>
+    <p style="font-size:1.1rem; line-height:1.8;">
+        This project was created collaboratively using GitHub, following structured coding
+        practices. Each member contributed to different parts of the website such as database
+        modeling, controllers, UI design, and navigation. The outcome is a functional,
+        full-stack web application that reflects real-world development workflows.
+    </p>
+
 </div>

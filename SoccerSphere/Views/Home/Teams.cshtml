@@ -3,71 +3,42 @@
     ViewData["Title"] = "All Teams";
 }
 
-<div class="container mt-4 p-5">
-    <h2>All Teams</h2>
-
-    <a asp-action="Add" class="btn btn-primary mb-3">Add New Team</a>
-
-    <form asp-action="Teams" method="get" class="mb-3 d-flex align-items-end">
-        <div class="mr-3 me-2">
-            <label for="sortType">Sort by:</label>
-            <select id="sortType" name="sortType" class="form-control">
-                <option value="">-- None --</option>
-                <option value="name" selected="@(ViewData["CurrentSortType"]?.ToString() == "name")">Team Name</option>
-                <option value="wins" selected="@(ViewData["CurrentSortType"]?.ToString() == "wins")">Wins</option>
-                <option value="draws" selected="@(ViewData["CurrentSortType"]?.ToString() == "draws")">Draws</option>
-                <option value="losses" selected="@(ViewData["CurrentSortType"]?.ToString() == "losses")">Losses</option>
-            </select>
-        </div>
-
-        <div class="mr-3 me-1">
-            <label for="sortDir">Direction:</label>
-            <select id="sortDir" name="sortDir" class="form-control">
-                <option value="">-- None --</option>
-                <option value="asc" selected="@(ViewData["CurrentSortDir"]?.ToString() == "asc")">Ascending</option>
-                <option value="desc" selected="@(ViewData["CurrentSortDir"]?.ToString() == "desc")">Descending</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-secondary">Apply</button>
-    </form>
-
-    <table class="table table-bordered table-striped">
-        <thead>
+<h2>All Teams</h2>
+<a asp-action="Add" class="btn btn-primary btn-sm">Add</a>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["NameSortParam"]">Team Name</a>
+            </th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["WinsSortParam"]">Wins</a>
+            </th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["DrawsSortParam"]">Draws</a>
+            </th>
+            <th>
+                <a asp-action="Teams" asp-route-sortOrder="@ViewData["LossesSortParam"]">Losses</a>
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model.Teams)
+        {
             <tr>
-                <th>
-                    Team Name
-                </th>
-                <th>
-                    Wins
-                </th>
-                <th>
-                    Draws
-                </th>
-                <th>
-                    Losses
-                </th>
-                <th>
-                    Actions
-                </th>
+                <td>@team.TeamName</td>
+                <td>@team.Wins</td>
+                <td>@team.Draws</td>
+                <td>@team.Loses</td>
+                <td>
+                    <a asp-action="View" asp-route-id="@team.TeamId" class="btn btn-primary btn-sm">View</a>
+                    <a asp-action="Delete" asp-route-id="@team.TeamId" class="btn btn-danger btn-sm">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var team in Model.Teams)
-            {
-                <tr>
-                    <td>@team.TeamName</td>
-                    <td>@team.Wins</td>
-                    <td>@team.Draws</td>
-                    <td>@team.Loses</td>
-                    <td>
-                        <a asp-action="View" asp-route-id="@team.TeamId" class="btn btn-primary btn-sm">View</a>
-                        <a asp-action="Delete" asp-route-id="@team.TeamId" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
+        }
+    </tbody>
+</table>
 

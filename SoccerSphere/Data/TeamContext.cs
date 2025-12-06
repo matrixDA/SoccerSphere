@@ -8,8 +8,6 @@ namespace SoccerSphere.Data
             : base(options) { }
         public DbSet<Team> teams { get; set; }
         public DbSet<Player> players { get; set; }
-        public DbSet<Position> positions { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Team>().HasData(
@@ -18,13 +16,6 @@ namespace SoccerSphere.Data
                 new Team { TeamId = 3, TeamName = "Manchester City", Revenue = 150000000, Country = "England", Wins = 10, Loses = 1, Draws = 1 },
                 new Team { TeamId = 4, TeamName = "Arsenal", Revenue = 120000000, Country = "England", Wins = 9, Loses = 1, Draws = 2 }
                 );
-
-            modelBuilder.Entity<Position>().HasData(
-                new Position { PositionId = 1, PositionName = "Forward" },
-                new Position { PositionId = 2, PositionName = "Midfielder" },
-                new Position { PositionId = 3, PositionName = "Defender" },
-                new Position { PositionId = 4, PositionName = "Goalkeeper" }
-);
 
             modelBuilder.Entity<Player>().HasData(
                 new Player
@@ -36,8 +27,18 @@ namespace SoccerSphere.Data
                     Goals = 6,
                     Assists = 7,
                     MatchesPlayed = 8,
-                    Rating = 8.2,
-                    PositionId = 2
+                    Rating = 8.2
+                },
+                new Player
+                {
+                    PlayerId = 2,
+                    PlayerName = "Pedri",
+                    Country = "Spain",
+                    TeamId = 1,
+                    Goals = 6,
+                    Assists = 7,
+                    MatchesPlayed = 8,
+                    Rating = 8.2
                 },
                 new Player
                 {
@@ -48,8 +49,7 @@ namespace SoccerSphere.Data
                     Goals = 12,
                     Assists = 4,
                     MatchesPlayed = 10,
-                    Rating = 8.5,
-                    PositionId = 1
+                    Rating = 8.5
                 },
                 new Player
                 {
@@ -60,8 +60,7 @@ namespace SoccerSphere.Data
                     Goals = 3,
                     Assists = 5,
                     MatchesPlayed = 9,
-                    Rating = 7.9,
-                    PositionId = 2
+                    Rating = 7.9
                 },
                 new Player
                 {
@@ -72,8 +71,7 @@ namespace SoccerSphere.Data
                     Goals = 1,
                     Assists = 1,
                     MatchesPlayed = 9,
-                    Rating = 7.8,
-                    PositionId = 3
+                    Rating = 7.8
                 },
                 new Player
                 {
@@ -84,8 +82,7 @@ namespace SoccerSphere.Data
                     Goals = 0,
                     Assists = 0,
                     MatchesPlayed = 9,
-                    Rating = 8.1,
-                    PositionId = 4
+                    Rating = 8.1
                 },
                 new Player
                 {
@@ -96,9 +93,7 @@ namespace SoccerSphere.Data
                     Goals = 14,
                     Assists = 6,
                     MatchesPlayed = 11,
-                    Rating = 9.0,
-                    PositionId = 1
-
+                    Rating = 9.0
                 },
                 new Player
                 {
@@ -109,8 +104,7 @@ namespace SoccerSphere.Data
                     Goals = 8,
                     Assists = 7,
                     MatchesPlayed = 10,
-                    Rating = 8.4,
-                    PositionId = 1
+                    Rating = 8.4
                 },
                 new Player
                 {
@@ -121,9 +115,7 @@ namespace SoccerSphere.Data
                     Goals = 10,
                     Assists = 5,
                     MatchesPlayed = 11,
-                    Rating = 8.7,
-                    PositionId = 2
-
+                    Rating = 8.7
                 },
                 new Player
                 {
@@ -134,8 +126,7 @@ namespace SoccerSphere.Data
                     Goals = 0,
                     Assists = 0,
                     MatchesPlayed = 8,
-                    Rating = 8.3,
-                    PositionId = 4
+                    Rating = 8.3
                 },
                 new Player
                 {
@@ -146,8 +137,7 @@ namespace SoccerSphere.Data
                     Goals = 2,
                     Assists = 2,
                     MatchesPlayed = 9,
-                    Rating = 7.9,
-                    PositionId = 3
+                    Rating = 7.9
                 },
                 new Player
                 {
@@ -158,8 +148,7 @@ namespace SoccerSphere.Data
                     Goals = 15,
                     Assists = 3,
                     MatchesPlayed = 11,
-                    Rating = 9.1,
-                    PositionId = 1
+                    Rating = 9.1
                 },
                 new Player
                 {
@@ -170,8 +159,7 @@ namespace SoccerSphere.Data
                     Goals = 7,
                     Assists = 6,
                     MatchesPlayed = 11,
-                    Rating = 8.5,
-                    PositionId = 2
+                    Rating = 8.5
                 },
                 new Player
                 {
@@ -182,8 +170,7 @@ namespace SoccerSphere.Data
                     Goals = 4,
                     Assists = 7,
                     MatchesPlayed = 10,
-                    Rating = 8.2,
-                    PositionId = 2
+                    Rating = 8.2
                 },
                 new Player
                 {
@@ -194,8 +181,7 @@ namespace SoccerSphere.Data
                     Goals = 1,
                     Assists = 0,
                     MatchesPlayed = 10,
-                    Rating = 7.8,
-                    PositionId = 3
+                    Rating = 7.8
                 },
                 new Player
                 {
@@ -206,8 +192,7 @@ namespace SoccerSphere.Data
                     Goals = 3,
                     Assists = 4,
                     MatchesPlayed = 9,
-                    Rating = 7.9,
-                    PositionId = 2
+                    Rating = 7.9
                 },
                 new Player
                 {
@@ -218,8 +203,7 @@ namespace SoccerSphere.Data
                     Goals = 6,
                     Assists = 6,
                     MatchesPlayed = 10,
-                    Rating = 8.4,
-                    PositionId = 2
+                    Rating = 8.4
                 },
                 new Player
                 {
@@ -230,8 +214,7 @@ namespace SoccerSphere.Data
                     Goals = 9,
                     Assists = 8,
                     MatchesPlayed = 11,
-                    Rating = 8.8,
-                    PositionId = 1
+                    Rating = 8.8
                 },
                 new Player
                 {
@@ -242,8 +225,7 @@ namespace SoccerSphere.Data
                     Goals = 2,
                     Assists = 4,
                     MatchesPlayed = 8,
-                    Rating = 6.7,
-                    PositionId = 2
+                    Rating = 6.7
                 }
             );
 

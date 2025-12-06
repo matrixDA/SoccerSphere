@@ -5,36 +5,20 @@ namespace SoccerSphere.Models
     public class Player
     {
         public int PlayerId { get; set; }
-
-        [Required(ErrorMessage = "Player Name is Required.")]
+        [Required(ErrorMessage = "Please enter player's name.")]
         public string PlayerName { get; set; }
-
         [Required(ErrorMessage = "Country is required.")]
         public string Country { get; set; }
+        public int Goals { get; set; }
 
-        [Required(ErrorMessage = "Goals is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Goals must be at least zero.")]
-        public int? Goals { get; set; }
+        public int Assists { get; set; }
 
-        [Required(ErrorMessage = "Assists is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Assists must be at least zero.")]
-        public int? Assists { get; set; }
+        public int MatchesPlayed { get; set; }
 
-        [Required(ErrorMessage = "Matches Played is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Matches Played must at least be zero.")]
-        public int? MatchesPlayed { get; set; }
+        public double Rating { get; set; }
+        [Required(ErrorMessage = "Please select a team.")]
+        public int TeamId { get; set; }
 
-        [Required(ErrorMessage = "Rating is required.")]
-        [DisplayFormat(DataFormatString = "{0:F1}", ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true)]
-        [Range(0, 10)]
-        public double? Rating { get; set; }
-
-        [Required(ErrorMessage = "Team is Required.")]
-        public int? TeamId { get; set; }
         public Team? Team { get; set; }
-
-        [Required(ErrorMessage = "Position is Required.")]
-        public int? PositionId { get; set; }
-        public Position? Position { get; set; }
     }
 }
